@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:36:00 by sben-ela          #+#    #+#             */
-/*   Updated: 2023/02/22 16:53:47 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:16:43 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,33 @@ char    *ft_strdup(char *source);
 int handle_pipes(char *line);
 
 
-// builtin
+// builtin cd
 int	cd_builtin(char **cmd, char ***env);
+void	set_dir(t_env *ev, char *cwd, char *owd);
+
+//builtin echo
 int	echo_builtin(char **cmd);
+void	echo(char **str, int pos);
+void	ft_putstr(char *s);
+void	ft_putchar(char c);
+
+// builtin env
 int env_builtin(char **cmd, char **env);
+
+// builtin exit
 int exit_builtin(char **cmd, char **env);
+
+//builtin export
 int	export_builtin(char ***ev, char **cmd);
+void	ft_swapelem(t_env_elem *a, t_env_elem *b);
+void	ft_sort(t_env *env);
+void	print_sorted_env(t_env *env);
+void	add_var(t_env *env, char *cmd); //hadchi ghalt f export 
+
+//builtin pwd
 int	pwd_builtin(char *cmd);
+
+//builtin unset
 int	unset_builtin(char **cmd, char ***ev);
 
 

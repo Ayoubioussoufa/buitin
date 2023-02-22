@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:40:06 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/22 15:39:44 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 17:14:49 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 //environment khdam fih f cd, unset, export !!!!!!! needs to be changed there
 
-void	ft_swap(t_env_elem *a, t_env_elem *b)
+void	ft_swapelem(t_env_elem *a, t_env_elem *b)
 {
 	char	*key_tmp;
 	char	*val_tmp;
@@ -53,7 +53,7 @@ void	ft_sort(t_env *env)
 	{
 		if (ft_strcmp(current->key, current->next->key) > 0)
 		{
-			ft_swap(current, current->next);
+			ft_swapelem(current, current->next);
 			current = env->head;
 		}
 		else

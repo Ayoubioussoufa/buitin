@@ -1,21 +1,37 @@
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+READ = -L/goinfre/sben-ela/homebrew/opt/readline/lib
+INCLUDE = -I/goinfre/sben-ela/homebrew/opt/readline/include
 PROG = mini_shell
 LIBFT = Libft/libft.a
-SOURCES = mini_shell.c ft_split.c utils.c unset_builtin.c ft_execute.c parse_redirect.c  ft_error.c handle_couts.c $(LIBFT)
+PARSING = parse_redirect.c  handle_couts.c  expanding.c  parse.c
+BUITIN = cd_builtin.c echo_builtin.c env_builtin.c exit_builtin.c export_builtin.c pwd_builtin.c unset_builtin.c
+UTILS = env_utils.c  environment.c  ft_error.c  ft_split_v2.c
+EXECUTE = ft_execute.c
+SOURCES = $(addprefix ./parsing/,$(PARSING))\
+	$(addprefix ./builtin/,$(BUILTIN))\
+	$(addprefix ./utils/,$(UTILS))\
+	$(addprefix ./execute/,$(EXECUTE))\
+	$(LIBFT)\
+	mini_shell.c 
 
 OBJECTS = $(SOURCES:.c=.o)
 
 all : $(PROG)
-$(LIBFT) :
-	make -C libft
 $(PROG) : $(OBJECTS)
-	$(CC) $(CFLAGS) $(OBJECTS) -lreadline -o $(PROG)
+	$(CC) $(CFLAGS) -o $(PROG) $(OBJECTS) -lreadline $(READ)
+
+%.o : %.c
+	$(CC) $(CFLAGS) -c $(INCLUDE) $<
+$(LIBFT) :
+	make -C ./Libft
 
 clean:
 	rm -f $(OBJECTS)
+	make -C libft clean
 
 fclean: clean
 	rm -f $(NAME) $(PROG) $(LIBFT)
+	make -C libft fclean
 
 bonus: all
 	ar rc $(NAME)

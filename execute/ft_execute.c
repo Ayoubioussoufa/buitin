@@ -6,12 +6,12 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:28:01 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/22 12:07:41 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:59:03 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 void	error(char *str, int n)
 {
@@ -361,7 +361,7 @@ int	check_builtins(char *cmd)
 		return (1);
 	else if (cmd && !ft_strcmp(cmd, "exit"))
 		return (1);
-	else if (cm! && !ft_strcmp(cmd, "cd"))
+	else if (cmd && !ft_strcmp(cmd, "cd"))
 		return (1);
 	else if (cmd && !ft_strcmp(cmd, "env"))
 		return (1);
@@ -374,10 +374,10 @@ void	ft_which_cmd(char **cmd, char ***env)
 {
 	if (cmd[0] && !ft_strcmp(cmd[0], "export"))
 		export_builtin(env, cmd);
-	else if (cmd[0] && !t_strcmp(cmd[0], "unset"))
+	else if (cmd[0] && !ft_strcmp(cmd[0], "unset"))
 		unset_builtin(cmd, env);
 	else if (cmd[0] && !ft_strcmp(cmd[0], "pwd"))
-		pwd_builtin(cmd);
+		pwd_builtin(*cmd);
 	else if (cmd[0] && !ft_strcmp(cmd[0], "exit"))
 		exit_builtin(cmd, *env);
 	else if (cmd[0] && !ft_strcmp(cmd[0], "cd"))
@@ -385,33 +385,32 @@ void	ft_which_cmd(char **cmd, char ***env)
 	else if (cmd[0] && !ft_strcmp(cmd[0], "env"))
 		env_builtin(cmd, *env);
 	else if (cmd[0] && !ft_strcmp(cmd[0], "echo"))
-		echo_builtin(cmd, *env);
+		echo_builtin(cmd);
 }
 
-int	exec_builtins_execve(char ***env)
+int	exec_builtins_execve(t_shell *shell, char ***env, int fd[2])
 {
 	int	pid;
 
 	pid = 0;
-	if (check_builtins() == 1)
-		execute_builtins();
-	else
-		pid = execute_cmd();
-	return (pid);
+	(void)fd;
+	(void)env;
+	if (check_builtins(shell->cmd) == 1)
+		;
+		// execute_builtins();
+	// else
+	// 	pid = execute_cmd();
+	return (0);
 }
 
 void	execute(t_shell *shell, char ***env)
 {
 	int			fd[2];
 	int			pid;
-	static int	count;
 
 	pid = 0;
 	if (shell->type == 3)
-	{
 		pid = exec_builtins_execve(shell, env, fd);
-		count++;
-	}
 }
 
 // void	checkingcmd(t_shell *shell, char **env)

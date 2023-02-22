@@ -6,11 +6,11 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:40:06 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/20 10:33:57 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:39:44 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 // int	export_builtin(char **cmd)
 // {
@@ -123,14 +123,14 @@ int	export_builtin(char ***ev, char **cmd)
     return (1);
 }
 
-int	main(int ac, char **av, char **env)
-{
-	char	**cmd;
-	int	i;
+// int	main(int ac, char **av, char **env)
+// {
+// 	char	**cmd;
+// 	int	i;
 
-	i = 0;
-	cmd = ft_split("export", ' ');
-	export_builtin(&env, cmd);
-	// while (env[i])
-	// 	printf("%s\n", env[i++]);
-}
+// 	i = 0;
+// 	cmd = ft_split("export", ' ');
+// 	export_builtin(&env, cmd);
+// 	// while (env[i])
+// 	// 	printf("%s\n", env[i++]);
+// }

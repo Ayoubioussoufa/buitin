@@ -1,4 +1,4 @@
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 int	ft_perror(char *msg, char *utils)
 {
@@ -20,7 +20,7 @@ int	ft_puterr(char *cmd, char *arg, char *msg, int errnum)
 		perror("");
 	else
 		printf("%s\n", msg);
-	// status = err_num;
-	//return (err_num);
-    return (1); // for the moment
+	// status = errnum;
+	return (errnum);
+    // return (1); // for the moment
 }

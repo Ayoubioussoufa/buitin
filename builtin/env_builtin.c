@@ -6,11 +6,11 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 13:44:55 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/19 14:42:21 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:55:06 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 int env_builtin(char **cmd, char **env)
 {

@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_builtin.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/15 13:43:39 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/15 13:44:08 by aybiouss         ###   ########.fr       */
+/*   Created: 2023/02/22 15:14:26 by aybiouss          #+#    #+#             */
+/*   Updated: 2023/02/22 15:36:05 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
-int exit_builtin()
+int ft_strcmp(char *s1, char *s2)
 {
-    //only need to free all parsing and execution part
-    exit(1);
+    int i;
+
+    i = 0;
+    while (s1[i] && s2[i] && s1[i] == s2[i])
+        i++;
+    return (s1[i] - s2[i]);
 }

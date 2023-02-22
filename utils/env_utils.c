@@ -1,4 +1,4 @@
-/* ************************************************************************** */
+ /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 char	*ft_strndup(char *s1, int n)
 {
@@ -111,7 +111,7 @@ t_env_elem	*new_env_elem(char *line)
 	t_env_elem	*elem;
 	char		*key;
 	char		*value;
-	unsigned int	index;
+	int	index;
 
 	index = ft_strchr(line, '=');
 	elem = malloc(sizeof(t_env_elem));
@@ -188,7 +188,7 @@ char	*search_env_var(char *key, char **env)
 
 	i = 0;
 	if (!ft_strcmp(key, "?"))
-		return (ft_itoa(/*status*/));
+		return (ft_itoa(1));//status latest exit
 	while (env[i] && ft_strncmp(env[i], key, ft_strlen(key)))
 		i++;
 	if (!env[i])
@@ -211,7 +211,7 @@ char	*get_expanded_value(char **line, char **env)
 		key[key_len++] = *((*line)++);
 	else
 	{
-		while (**line && is_alphanum(**line))
+		while (**line && ft_isalnum(**line))
 			key[key_len++] = *((*line)++);
 	}
 	key[key_len] = '\0';

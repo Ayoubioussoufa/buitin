@@ -6,11 +6,11 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 13:09:29 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/19 14:37:31 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/22 14:55:06 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 void	unset_env(char *cmd, t_env *env)
 {

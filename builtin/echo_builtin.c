@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini_shell.h"
+#include "../mini_shell.h"
 
 void	ft_putchar(char c)
 {
@@ -130,25 +130,25 @@ int	echo_builtin(char **cmd)
 	return (1);
 }
 
-int	main()
-{
-	char **cmd;
-	char	**lol;
+// int	main()
+// {
+// 	char **cmd;
+// 	char	**lol;
 
-	// cmd = ft_split("echo \"\\0\"", ' ');
-	cmd = ft_split("echo \"\\\\\\\\0\"", ' ');
-	// lol = ft_split("echo \0", ' ');
-	// printf("%s %s %s \n", cmd[0], cmd[1], cmd[2]);
-	// printf("%s %s \t \n", lol[0], lol[1]);
-	echo_builtin(cmd);
-	// printf("%s\n", cmd[1]);
-	// ft_putchar("\\0\n");
-	// printf("\\0\n");
-	// printf("%d\n", strlen("0"));
-	// printf("%s\n", cmd[0]);
-	// printf("%s\n", cmd[1]);
-	// printf("%s\n", cmd[2]);
-}
+// 	// cmd = ft_split("echo \"\\0\"", ' ');
+// 	cmd = ft_split("echo \"\\\\\\\\0\"", ' ');
+// 	// lol = ft_split("echo \0", ' ');
+// 	// printf("%s %s %s \n", cmd[0], cmd[1], cmd[2]);
+// 	// printf("%s %s \t \n", lol[0], lol[1]);
+// 	echo_builtin(cmd);
+// 	// printf("%s\n", cmd[1]);
+// 	// ft_putchar("\\0\n");
+// 	// printf("\\0\n");
+// 	// printf("%d\n", strlen("0"));
+// 	// printf("%s\n", cmd[0]);
+// 	// printf("%s\n", cmd[1]);
+// 	// printf("%s\n", cmd[2]);
+// }
 
 // int main(int argc, char *argv[]) {
 //     int i;

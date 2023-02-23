@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:28:01 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/23 11:44:22 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:51:28 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,82 +388,87 @@ void	ft_which_cmd(char **cmd, char ***env)
 		echo_builtin(cmd);
 }
 
-// void	exec_redir_in(t_shell *tmp, int *in)
-// {
-// 	if (access(tmp->cmd, F_OK) == 0)
-// 	{
-// 		close(*in);
-// 		*in = open(tmp->cmd, O_RDONLY, 0666);
-// 	}
-// 	else
-// 	{
-// 		*in = -1;
-// 		write(2, "minishell: ", 11);
-// 		ft_perror(tmp->cmd, ": No such file or directory");
-// 	}
-// }
-
-// void	exec_redir(t_shell *shell)
-// {
-// 	t_shell	*tmp;
-
-// 	tmp = shell->head;
-// 	while (tmp)
-// 	{
-// 		if (tmp->type == REDIR_IN)
-// 			exec_redir_in(tmp, &fd->in);
-// 		else if (tmp->type == REDIR_OUT)
-// 		{
-// 			close(fd->out);
-// 			fd->out = open(tmp->arg, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-// 		}
-// 		else if (tmp->type == DREDIR_OUT)
-// 		{
-// 			close(fd->out);
-// 			fd->out = open(tmp->arg, O_WRONLY | O_CREAT | O_APPEND, 0666);
-// 		}
-// 		else if (tmp->type == HERE_DOC)
-// 		{
-// 			close(fd->in);
-// 			fd->in = open(tmp->arg, O_RDONLY, 0666);
-// 		}
-// 		tmp = tmp->next;
-// 	}
-// }
-
-// void	check_fd_builtins(t_cmd *cmd)
-// {
-// 	if (cmd->fd.in != 0)
-// 	{
-// 		dup2(cmd->fd.in, STDIN_FILENO);
-// 		close(cmd->fd.in);
-// 	}
-// 	if (cmd->fd.out != 1)
-// 	{
-// 		dup2(cmd->fd.out, STDOUT_FILENO);
-// 		close(cmd->fd.out);
-// 	}
-// }
-
-void	execute_builtin(char **cmd, char **env)
+void	exec_redir_in(t_shell *tmp, int *in)
 {
-	// int	in;
-	// int	out;
-
-	// in = dup(STDIN_FILENO);
-	// out = dup(STDOUT_FILENO);
-	// if (fd.in == -1)
-	// {
-	// 	//status = 1;
-	// 	return ;
-	// }
-	// check_fd_builtins(cmd);
-	ft_which_cmd(cmd, &env);
-	// dup2(in, STDIN_FILENO);
-	// dup2(out, STDOUT_FILENO);
+	if (access(tmp->cmds[0], F_OK) == 0)
+	{
+		close(*in);
+		*in = open(tmp->cmds[0], O_RDONLY, 0666);
+	}
+	else
+	{
+		*in = -1;
+		write(2, "minishell: ", 11);
+		ft_perror(tmp->cmd, ": No such file or directory");
+	}
 }
 
-int	exec_builtins_execve(t_shell *shell, char ***env)
+void	exec_redir(t_shell *shell, t_pipe *pipe)
+{
+	t_shell	*tmp;
+
+	tmp = shell;
+	while (tmp)
+	{
+		if (tmp->type == REDIR_INPUT)
+			exec_redir_in(tmp, &pipe->infile);
+		else if (tmp->type == REDIR_OUTPUT)
+		{
+			close(pipe->outfile);
+			pipe->outfile = open(tmp->cmds[0], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		}
+		else if (tmp->type == APPEND)
+		{
+			close(pipe->outfile);
+			pipe->outfile = open(tmp->cmds[0], O_WRONLY | O_CREAT | O_APPEND, 0666);
+		}
+		else if (tmp->type == DELIMITER)
+		{
+			close(pipe->infile);
+			pipe->infile = open(tmp->cmds[0], O_RDONLY, 0666);
+		}
+		tmp = tmp->next;
+	}
+}
+
+void	check_fd_builtins(t_pipe *pipe)
+{
+	if (pipe->infile != 0)
+	{
+		dup2(pipe->infile, STDIN_FILENO);
+		close(pipe->infile);
+	}
+	if (pipe->outfile != 1)
+	{
+		dup2(pipe->outfile, STDOUT_FILENO);
+		close(pipe->outfile);
+	}
+}
+
+void	execute_builtin(char **cmd, char **env, t_pipe *pipe)
+{
+	int	in;
+	int	out;
+
+	in = dup(STDIN_FILENO);
+	out = dup(STDOUT_FILENO);
+	if (pipe->infile == -1)
+	{
+		//status = 1;
+		return ;
+	}
+	check_fd_builtins(pipe);
+	ft_which_cmd(cmd, &env);
+	int i = 0;
+	while (env[i])
+		printf("%s\n", env[i++]);
+	dup2(in, STDIN_FILENO);
+	close(in);
+	dup2(out, STDOUT_FILENO);
+	close(out);
+}
+
+int	exec_builtins_execve(t_shell *shell, char ***env, t_pipe *pipe)
 {
 	// int	pid;
 
@@ -471,21 +476,25 @@ int	exec_builtins_execve(t_shell *shell, char ***env)
 	// (void)fd;
 	// (void)env;
 	if (check_builtins(shell->cmds[0]) == 1)
-		execute_builtin(shell->cmds, *env);
+		execute_builtin(shell->cmds, *env, pipe);
 		// execute_builtins();
 	// else
-	// 	pid = execute_cmd();
+	// 	execute_cmd();
 	return (0);
 }
 
-void	execute(t_shell *shell, char ***env)
+void	execute(t_shell *shell, char ***env, t_pipe *pipe)
 {
 	// int		fd[2];
 
 	// printf("%s\n", shell->cmds[0]);
 	// printf("%d\n", shell->type);
 	if (shell->type == CMD)
-		exec_builtins_execve(shell, env);
+		exec_builtins_execve(shell, env, pipe);
+	// if (shell->type == PIPE)
+	// {
+		
+	// }
 }
 
 // void	checkingcmd(t_shell *shell, char **env)

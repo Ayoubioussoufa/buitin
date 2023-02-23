@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:40:06 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/23 11:43:16 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 14:03:14 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	add_var(t_env *env, char *cmd)
 	t_env_elem	*newl;
 
 	newl = new_env_elem(cmd);
-	// printf("%s %s\n", newl->key, newl->value);
+	printf("%s %s\n", newl->key, newl->value);
 	new = search_env_elem(env, newl->key);
 	if (new)
 	{

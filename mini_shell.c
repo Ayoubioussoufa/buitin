@@ -130,12 +130,34 @@ void sigint_handler(int sig) {
 			return ;
 }
 
+t_pipe	*init_pipe(t_pipe *pipe)
+{
+	pipe = malloc(sizeof(t_pipe));
+	if  (!pipe)
+	{
+		free(pipe);
+		return (NULL);
+	}
+	pipe->infile = 0;
+	pipe->outfile = 0;
+	pipe->paths = NULL;
+	pipe->cmds = NULL;
+	pipe->cmd = NULL;
+	return (pipe);
+}
+
 void mini_shell(char **env)
 {
 	char *read;
 	t_shell *shell;
+	t_pipe	*pipe;
+	t_env	*ev;
 	while(1)
 	{
+		pipe = NULL;
+		pipe = init_pipe(pipe);
+		ev = NULL;
+		ev = init_env(ev);
 		read = readline("\033[0;32mMinishell>> \033[0m");
 		if(!read)
 			exit(0);
@@ -145,7 +167,11 @@ void mini_shell(char **env)
 		{
 		 	read = parse_redirect(read);
 			shell = parse_line(read, env);
-			execute(shell, &env);
+			execute(shell, &env, pipe);
+			printf("*********************\n");
+			int i = 0;
+			while (env[i])
+				printf("%s\n", env[i++]);
 			//  int i = 0;
 			//  while(shell)
 			//  {

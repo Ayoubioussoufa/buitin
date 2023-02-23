@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:36:00 by sben-ela          #+#    #+#             */
-/*   Updated: 2023/02/23 12:34:36 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 13:30:22 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,17 @@
 # include <sys/wait.h>
 # include <sys/errno.h>
 # include <string.h>
+
+typedef struct s_pipe {
+	int		infile;
+	int		outfile;
+	// int		i;
+	// int		last;
+	int		fd[2];
+	char	**paths;
+	char	**cmds;
+	char	*cmd;
+}	t_pipe;
 
 typedef struct s_env_elem
 {
@@ -57,7 +68,7 @@ typedef	struct	shell
 	struct shell	*next;
 }	t_shell;
 
-void	execute(t_shell *shell, char ***env);
+void	execute(t_shell *shell, char ***env, t_pipe *pipe);
 // int		ft_strchr(char *str, char c);
 char	**ft_split(char const *str, char c);
 void    ft_execute(t_shell *shell, char **env);

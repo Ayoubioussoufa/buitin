@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 13:09:29 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/22 14:55:06 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 15:58:47 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ int	unset_builtin(char **cmd, char ***ev)
 		free(cmd[i]);
 		i++;
 	}
+	// int j = 0;
+	// i = 0;
+	// while (ev)
+	// {
+	// 	j = 0;
+	// 	while(ev[i][j])
+	// 		free(ev[i][j++]);
+	// 	free(ev[i]);
+	// 	i++;
+	// }
+	// free(ev);
 	*ev = convert_array(env);
 	del_env(env);
 	return (1); //status hnayya succesfully

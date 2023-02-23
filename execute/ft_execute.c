@@ -6,97 +6,97 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:28:01 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/23 11:05:37 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:44:22 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../mini_shell.h"
 
-void	error(char *str, int n)
-{
-	if (str)
-	{
-		ft_putstr_fd(strerror(n), 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd("\n", 2);
-	}
-	exit(n);
-}
+// void	error(char *str, int n)
+// {
+// 	if (str)
+// 	{
+// 		ft_putstr_fd(strerror(n), 2);
+// 		ft_putstr_fd(": ", 2);
+// 		ft_putstr_fd(str, 2);
+// 		ft_putstr_fd("\n", 2);
+// 	}
+// 	exit(n);
+// }
 
-char	*get_cmd(char **paths, char *cmd)
-{
-	int		i;
-	char	*tmp;
-	char	*path;
+// char	*get_cmd(char **paths, char *cmd)
+// {
+// 	int		i;
+// 	char	*tmp;
+// 	char	*path;
 
-	if (ft_strchr(cmd, '/'))
-		return (cmd);
-	i = 0;
-	while (paths[i])
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(path, F_OK) == 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	return (NULL);
-}
+// 	if (ft_strchr(cmd, '/'))
+// 		return (cmd);
+// 	i = 0;
+// 	while (paths[i])
+// 	{
+// 		tmp = ft_strjoin(paths[i], "/");
+// 		path = ft_strjoin(tmp, cmd);
+// 		free(tmp);
+// 		if (access(path, F_OK) == 0)
+// 			return (path);
+// 		free(path);
+// 		i++;
+// 	}
+// 	return (NULL);
+// }
 
-char	**get_paths(char **env, t_shell *shell)
-{
-	char	**paths;
-	int		i;
+// char	**get_paths(char **env, t_shell *shell)
+// {
+// 	char	**paths;
+// 	int		i;
 
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strnstr(env[i], "PATH", 4))
-		{
-			paths = ft_split(env[i] + 5, ':');
-			if (!paths)
-				error("Split function failed", 1);
-			return (paths);
-		}
-		i++;
-	}
-	ft_putstr_fd("Command not found: ", 2);
-	ft_putstr_fd(shell->cmd, 2);
-	ft_putstr_fd("\n", 2);
-	exit(127);
-	return (NULL);
-}
+// 	i = 0;
+// 	while (env[i])
+// 	{
+// 		if (ft_strnstr(env[i], "PATH", 4))
+// 		{
+// 			paths = ft_split(env[i] + 5, ':');
+// 			if (!paths)
+// 				error("Split function failed", 1);
+// 			return (paths);
+// 		}
+// 		i++;
+// 	}
+// 	ft_putstr_fd("Command not found: ", 2);
+// 	ft_putstr_fd(shell->cmd, 2);
+// 	ft_putstr_fd("\n", 2);
+// 	exit(127);
+// 	return (NULL);
+// }
 
-void	ft_execute(t_shell *shell, char **env)
-{
-	pid_t	pid;
-	int	ret = 0;
-	// (void)env;
-	pid = fork();
-	// int i = ft_lstsize(shell);
-	// while (shell)
-	// {
-	// 	printf("%s \t %d\n", shell->cmd, shell->type);
-	// 	shell = shell->next;
-	// }
-	// printf("%d\n", i);
-	if (pid == 0)
-	{
-		shell->cmds = ft_split(shell->cmd, ' '); //split the given commands
-		// printf("%s\n", shell->cmds[0]);
-		// printf("%s\n", shell->cmds[0] + 1);
-		shell->paths = get_paths(env, shell); //get all paths
-		shell->argv = get_cmd(shell->paths, shell->cmds[0]); // join the path with the command
-		if (execve(shell->argv, shell->cmds, env) == -1) //execute the cmd in the given env
-			error(NULL, errno);
-	}
-	else
-		waitpid(-1, &ret, 0);
-}
+// void	ft_execute(t_shell *shell, char **env)
+// {
+// 	pid_t	pid;
+// 	int	ret = 0;
+// 	// (void)env;
+// 	pid = fork();
+// 	// int i = ft_lstsize(shell);
+// 	// while (shell)
+// 	// {
+// 	// 	printf("%s \t %d\n", shell->cmd, shell->type);
+// 	// 	shell = shell->next;
+// 	// }
+// 	// printf("%d\n", i);
+// 	if (pid == 0)
+// 	{
+// 		shell->cmds = ft_split(shell->cmd, ' '); //split the given commands
+// 		// printf("%s\n", shell->cmds[0]);
+// 		// printf("%s\n", shell->cmds[0] + 1);
+// 		shell->paths = get_paths(env, shell); //get all paths
+// 		shell->argv = get_cmd(shell->paths, shell->cmds[0]); // join the path with the command
+// 		if (execve(shell->argv, shell->cmds, env) == -1) //execute the cmd in the given env
+// 			error(NULL, errno);
+// 	}
+// 	else
+// 		waitpid(-1, &ret, 0);
+// }
 
 // void	checktype(t_shell *shell, char **env)
 // {
@@ -373,7 +373,7 @@ int	check_builtins(char *cmd)
 void	ft_which_cmd(char **cmd, char ***env)
 {
 	if (cmd[0] && !ft_strcmp(cmd[0], "export"))
-		export_builtin(env, cmd);
+		export_builtin(cmd, env);
 	else if (cmd[0] && !ft_strcmp(cmd[0], "unset"))
 		unset_builtin(cmd, env);
 	else if (cmd[0] && !ft_strcmp(cmd[0], "pwd"))
@@ -445,48 +445,48 @@ void	ft_which_cmd(char **cmd, char ***env)
 // 	}
 // }
 
-// void	execute_builtin(char **cmd, char **env)
-// {
-// 	int	in;
-// 	int	out;
+void	execute_builtin(char **cmd, char **env)
+{
+	// int	in;
+	// int	out;
 
-// 	in = dup(STDIN_FILENO);
-// 	out = dup(STDOUT_FILENO);
-// 	if (fd.in == -1)
-// 	{
-// 		//status = 1;
-// 		return ;
-// 	}
-// 	check_fd_builtins(cmd);
-// 	ft_which_cmd(cmd, env, head);
-// 	dup2(in, STDIN_FILENO);
-// 	dup2(out, STDOUT_FILENO);
-// }
+	// in = dup(STDIN_FILENO);
+	// out = dup(STDOUT_FILENO);
+	// if (fd.in == -1)
+	// {
+	// 	//status = 1;
+	// 	return ;
+	// }
+	// check_fd_builtins(cmd);
+	ft_which_cmd(cmd, &env);
+	// dup2(in, STDIN_FILENO);
+	// dup2(out, STDOUT_FILENO);
+}
 
-// int	exec_builtins_execve(t_shell *shell, char ***env, int fd[2])
-// {
-// 	int	pid;
+int	exec_builtins_execve(t_shell *shell, char ***env)
+{
+	// int	pid;
 
-// 	pid = 0;
-// 	(void)fd;
-// 	(void)env;
-// 	if (check_builtins(shell->cmd) == 1)
-// 		execute_builtin(shell->cmd, env);
-// 		// execute_builtins();
-// 	// else
-// 	// 	pid = execute_cmd();
-// 	return (0);
-// }
+	// pid = 0;
+	// (void)fd;
+	// (void)env;
+	if (check_builtins(shell->cmds[0]) == 1)
+		execute_builtin(shell->cmds, *env);
+		// execute_builtins();
+	// else
+	// 	pid = execute_cmd();
+	return (0);
+}
 
-// void	execute(t_shell *shell, char ***env)
-// {
-// 	int			fd[2];
-// 	int			pid;
+void	execute(t_shell *shell, char ***env)
+{
+	// int		fd[2];
 
-// 	pid = 0;
-// 	if (shell->type == 3)
-// 		pid = exec_builtins_execve(shell, env, fd);
-// }
+	// printf("%s\n", shell->cmds[0]);
+	// printf("%d\n", shell->type);
+	if (shell->type == CMD)
+		exec_builtins_execve(shell, env);
+}
 
 // void	checkingcmd(t_shell *shell, char **env)
 // {

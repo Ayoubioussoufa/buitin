@@ -144,8 +144,8 @@ void mini_shell(char **env)
 		if (read[0] && !parse_syntax(read, 0) && !count_single_couts(read) && !count_double_couts(read))
 		{
 		 	read = parse_redirect(read);
-			 shell = parse_line(read, env);
-			 execute(shell, &env);
+			shell = parse_line(read, env);
+			execute(shell, &env);
 			//  int i = 0;
 			//  while(shell)
 			//  {
@@ -160,7 +160,7 @@ void mini_shell(char **env)
 			//system("leaks mini_shell");
 		}
 		 else if(read[0])
-		 	ft_error("syntax error");
+		 	printf("syntax error\n");
 	}
 }
 int main(int ac, char **av, char **env)
@@ -168,7 +168,7 @@ int main(int ac, char **av, char **env)
 	(void)av;
 	if(ac != 1)
 	{
-		ft_error("invalid number of argument");
+		printf("invalid number of argument\n");
 		return(0);
 	}
 	signal(SIGINT, sigint_handler);
@@ -178,3 +178,5 @@ int main(int ac, char **av, char **env)
 }
 // ech'o "hello wor'ld"
 // ech"o 'hello wor"ld'
+
+//UNSET 

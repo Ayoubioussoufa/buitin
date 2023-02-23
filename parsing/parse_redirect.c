@@ -117,7 +117,7 @@ char	*parse_redirect(char *line)
 	if (!(new_line = malloc(ft_strlen(line) + 1 + (count_redirect(line) * 2))))
 	{
 		free(new_line);
-		ft_error("malloc not allocate");
+		printf("malloc not allocate\n");
 		return (0);
 	}
 	parse_all(line, new_line, i, j);

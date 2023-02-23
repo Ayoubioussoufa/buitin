@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:36:00 by sben-ela          #+#    #+#             */
-/*   Updated: 2023/02/23 11:05:27 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:42:26 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef	struct	shell
 }	t_shell;
 
 void	execute(t_shell *shell, char ***env);
-void    ft_error(char *str);
 // int		ft_strchr(char *str, char c);
 char	**ft_split(char const *str, char c);
 void    ft_execute(t_shell *shell, char **env);
@@ -66,6 +65,7 @@ void	whatever(t_shell *shell, char **env);
 char	*parse_redirect(char *line);
 
 //utils
+int ft_strcmp(char *s1, char *s2);
 int	handle_couts(t_shell *shell);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
 // char	*ft_strjoin(char const *s1, char const *s2);
@@ -106,7 +106,6 @@ int	ft_puterr(char *cmd, char *arg, char *msg, int errnum);
 int	ft_perror(char *msg, char *utils);
 
 int    ft_strchr(char *s, int c);
-int        ft_strcmp(char *s1, char *s2);
 int        ft_strlen(char *str);
 char    **ft_split_v2(char const *str, char c);
 char    *parse_redirect(char *line);
@@ -150,7 +149,7 @@ int env_builtin(char **cmd, char **env);
 int exit_builtin(char **cmd, char **env);
 
 //builtin export
-int	export_builtin(char ***ev, char **cmd);
+int	export_builtin(char **cmd, char ***ev);
 void	ft_swapelem(t_env_elem *a, t_env_elem *b);
 void	ft_sort(t_env *env);
 void	print_sorted_env(t_env *env);

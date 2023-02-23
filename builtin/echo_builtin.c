@@ -121,14 +121,16 @@ int	echo_builtin(char **cmd)
 		// size_t len = strlen(cmd[j]);
         // write(STDOUT_FILENO, cmd[j], len);
 		if (!cmd[j + 1] && f)
-			ft_putchar('\n');
-		else if (!cmd[j + 1] && !f)
 			ft_putchar('\0');
+		else if (!cmd[j + 1] && !f)
+			ft_putchar('\n');
 		else
 			ft_putchar(' ');
 	}
 	return (1);
 }
+
+// \\\\0 and stuff itgado
 
 // int	main()
 // {

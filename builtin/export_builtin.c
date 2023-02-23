@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 13:40:06 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/22 17:14:49 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:43:16 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 //environment khdam fih f cd, unset, export !!!!!!! needs to be changed there
 
-void	ft_swapelem(t_env_elem *a, t_env_elem *b)
+void	ft_swap(t_env_elem *a, t_env_elem *b)
 {
 	char	*key_tmp;
 	char	*val_tmp;
@@ -53,7 +53,7 @@ void	ft_sort(t_env *env)
 	{
 		if (ft_strcmp(current->key, current->next->key) > 0)
 		{
-			ft_swapelem(current, current->next);
+			ft_swap(current, current->next);
 			current = env->head;
 		}
 		else
@@ -75,26 +75,49 @@ void	print_sorted_env(t_env *env)
 		if (current->value)
 			printf("=\"%s\"", current->value);
 		else
-			printf("=\'\'"); 
+			printf("=\"\""); 
 		printf("\n");
 		current = current->next;
+	}
+}
+
+void	add_env_elemi(t_env *env, t_env_elem *new)
+{
+	t_env_elem	*tmp;
+
+	tmp = env->head;
+	if (!env->head)
+		env->head = new;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		env->size++;
+		tmp->next = new;
+		new->prev = tmp;
+		new->next = NULL;
 	}
 }
 
 void	add_var(t_env *env, char *cmd)
 {
 	t_env_elem	*new;
+	t_env_elem	*newl;
 
-	new = new_env_elem(cmd);
-	search_env_elem(env, new->key);
-	add_env_elem(env, new);
-	// int i = 0;
-	// while (env->env[i])
-	// 	printf("%s\n", env->env[i++]);
-	// printf("%s=%s\n", new->key, new->value);
+	newl = new_env_elem(cmd);
+	// printf("%s %s\n", newl->key, newl->value);
+	new = search_env_elem(env, newl->key);
+	if (new)
+	{
+		free(new->value);
+		free(newl->key);
+		new->value = newl->value;
+	}
+	else
+		add_env_elem(env, new_env_elem(cmd)); //still dk why it doesnt add up
 }
 
-int	export_builtin(char ***ev, char **cmd)
+int	export_builtin(char **cmd, char ***ev)
 {
 	t_env	*env;
 	int	i;
@@ -102,7 +125,6 @@ int	export_builtin(char ***ev, char **cmd)
 	i = 1;
 	env = NULL;
 	env = create_env(*ev);
-	printf("*************************\n");
 	if (!cmd[1])
 		print_sorted_env(env);
 	else
@@ -115,8 +137,9 @@ int	export_builtin(char ***ev, char **cmd)
 			add_var(env, cmd[i]);
 			i++;
 		}
-		*ev = convert_array(env);
 	}
+	i = 0;
+	*ev = convert_array(env);
 	del_env(env);
 	// status = EXIT_SUCCESS;
 	// return (EXIT_SUCCESS);

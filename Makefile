@@ -21,7 +21,7 @@ $(PROG) : $(OBJECTS)
 	$(CC) $(CFLAGS) -o $(PROG) $(OBJECTS) -lreadline $(READ)
 
 %.o : %.c
-	$(CC) $(CFLAGS) -c $(INCLUDE) $<
+	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 $(LIBFT) :
 	make -C ./Libft
 

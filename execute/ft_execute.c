@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:28:01 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/23 10:15:22 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:05:37 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -478,15 +478,15 @@ void	ft_which_cmd(char **cmd, char ***env)
 // 	return (0);
 // }
 
-void	execute(t_shell *shell, char ***env)
-{
-	int			fd[2];
-	int			pid;
+// void	execute(t_shell *shell, char ***env)
+// {
+// 	int			fd[2];
+// 	int			pid;
 
-	pid = 0;
-	if (shell->type == 3)
-		pid = exec_builtins_execve(shell, env, fd);
-}
+// 	pid = 0;
+// 	if (shell->type == 3)
+// 		pid = exec_builtins_execve(shell, env, fd);
+// }
 
 // void	checkingcmd(t_shell *shell, char **env)
 // {

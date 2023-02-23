@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:36:00 by sben-ela          #+#    #+#             */
-/*   Updated: 2023/02/22 17:16:43 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 11:05:27 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # ifndef MINI_SHELL_H
 # define  MINI_SHELL_H
 
-#define    CMD 3
-#define    REDIR_INPUT 0
-#define    REDIR_OUTPUT 1
-#define    DELIMITER 4
-#define    APPEND 5
+#define		PIPE 2
+#define		CMD 3
+#define		REDIR_INPUT 0
+#define		REDIR_OUTPUT 1
+#define		DELIMITER 4
+#define		APPEND 5
 
 #include	<stdio.h>
 #include	<stdlib.h>
@@ -120,7 +121,7 @@ char    *ft_strtrim(char *s1, char *set);
 int        ft_strncmp(char *s1, char *s2, unsigned int n);
 char    *ft_strjoin(char *left_str, char *buff);
 void    ft_putstr_fd(char *s, int fd);
-int        parse_syntax(char *line);
+int	parse_syntax(char *line, char c);
 int        ft_checkspace(const char *str);
 int        count_single_couts(char *line);
 int        count_double_couts(char *line);

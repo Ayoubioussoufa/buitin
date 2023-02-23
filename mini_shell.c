@@ -97,7 +97,9 @@ t_shell *parse_line(char *line, char **env)
 		else if(!strcmp(args[i], "<"))
 			ft_lstadd_back(&shell, ft_lstnew(args[i++], REDIR_INPUT, env));
 		// creat new node and add it to shell list(shell)
-		ft_lstadd_back(&shell, ft_lstnew(args[i], 3, env));
+		ft_lstadd_back(&shell, ft_lstnew(args[i], CMD, env));
+		if(args[i + 1])
+			ft_lstadd_back(&shell, ft_lstnew(args[i], PIPE, env));
 		i++;
 	}
 	free(line);
@@ -139,7 +141,7 @@ void mini_shell(char **env)
 			exit(0);
 		add_history(read);
 		read += ft_checkspace(read);
-		if (read[0] && !parse_syntax(read) && !count_single_couts(read) && !count_double_couts(read))
+		if (read[0] && !parse_syntax(read, 0) && !count_single_couts(read) && !count_double_couts(read))
 		{
 		 	read = parse_redirect(read);
 			 shell = parse_line(read, env);

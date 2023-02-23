@@ -16,8 +16,11 @@ int	parse_syntax(char *line)
     char c;
 
 	i = 0;
-    if(handle_pipes(line))
+    if (handle_pipes(line))
+	{
+
         return (1);
+	}
 	// hanldle if the line par example == "<"
 	line = ft_strtrim(line, "\"");
 	////hanldle if the line par example == '<'

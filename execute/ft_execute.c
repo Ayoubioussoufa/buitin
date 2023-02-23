@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:28:01 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/22 15:59:03 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 10:15:22 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -388,20 +388,95 @@ void	ft_which_cmd(char **cmd, char ***env)
 		echo_builtin(cmd);
 }
 
-int	exec_builtins_execve(t_shell *shell, char ***env, int fd[2])
-{
-	int	pid;
+// void	exec_redir_in(t_shell *tmp, int *in)
+// {
+// 	if (access(tmp->cmd, F_OK) == 0)
+// 	{
+// 		close(*in);
+// 		*in = open(tmp->cmd, O_RDONLY, 0666);
+// 	}
+// 	else
+// 	{
+// 		*in = -1;
+// 		write(2, "minishell: ", 11);
+// 		ft_perror(tmp->cmd, ": No such file or directory");
+// 	}
+// }
 
-	pid = 0;
-	(void)fd;
-	(void)env;
-	if (check_builtins(shell->cmd) == 1)
-		;
-		// execute_builtins();
-	// else
-	// 	pid = execute_cmd();
-	return (0);
-}
+// void	exec_redir(t_shell *shell)
+// {
+// 	t_shell	*tmp;
+
+// 	tmp = shell->head;
+// 	while (tmp)
+// 	{
+// 		if (tmp->type == REDIR_IN)
+// 			exec_redir_in(tmp, &fd->in);
+// 		else if (tmp->type == REDIR_OUT)
+// 		{
+// 			close(fd->out);
+// 			fd->out = open(tmp->arg, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+// 		}
+// 		else if (tmp->type == DREDIR_OUT)
+// 		{
+// 			close(fd->out);
+// 			fd->out = open(tmp->arg, O_WRONLY | O_CREAT | O_APPEND, 0666);
+// 		}
+// 		else if (tmp->type == HERE_DOC)
+// 		{
+// 			close(fd->in);
+// 			fd->in = open(tmp->arg, O_RDONLY, 0666);
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// }
+
+// void	check_fd_builtins(t_cmd *cmd)
+// {
+// 	if (cmd->fd.in != 0)
+// 	{
+// 		dup2(cmd->fd.in, STDIN_FILENO);
+// 		close(cmd->fd.in);
+// 	}
+// 	if (cmd->fd.out != 1)
+// 	{
+// 		dup2(cmd->fd.out, STDOUT_FILENO);
+// 		close(cmd->fd.out);
+// 	}
+// }
+
+// void	execute_builtin(char **cmd, char **env)
+// {
+// 	int	in;
+// 	int	out;
+
+// 	in = dup(STDIN_FILENO);
+// 	out = dup(STDOUT_FILENO);
+// 	if (fd.in == -1)
+// 	{
+// 		//status = 1;
+// 		return ;
+// 	}
+// 	check_fd_builtins(cmd);
+// 	ft_which_cmd(cmd, env, head);
+// 	dup2(in, STDIN_FILENO);
+// 	dup2(out, STDOUT_FILENO);
+// }
+
+// int	exec_builtins_execve(t_shell *shell, char ***env, int fd[2])
+// {
+// 	int	pid;
+
+// 	pid = 0;
+// 	(void)fd;
+// 	(void)env;
+// 	if (check_builtins(shell->cmd) == 1)
+// 		execute_builtin(shell->cmd, env);
+// 		// execute_builtins();
+// 	// else
+// 	// 	pid = execute_cmd();
+// 	return (0);
+// }
 
 void	execute(t_shell *shell, char ***env)
 {

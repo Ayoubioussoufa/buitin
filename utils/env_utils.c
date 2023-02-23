@@ -79,7 +79,7 @@ int	ft_strchr(char *s, int c)
 	return (-1);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoinfree(char *s1, char *s2)
 {
 	char	*str;
 	int		s1_len;

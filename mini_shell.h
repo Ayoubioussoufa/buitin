@@ -6,7 +6,7 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 17:36:00 by sben-ela          #+#    #+#             */
-/*   Updated: 2023/02/23 11:42:26 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:34:36 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int ft_strcmp(char *s1, char *s2);
 int	handle_couts(t_shell *shell);
 int		ft_strncmp(char *s1, char *s2, unsigned int n);
 // char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoinfree(char *s1, char *s2);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putnstr(char *str, int n);

@@ -84,8 +84,8 @@ char	**convert_array(t_env *env)
 			arr[i] = ft_strdup(tmp->key);
 			if (tmp->value)
 			{
-				arr[i] = ft_strjoin(arr[i], "=");
-				arr[i] = ft_strjoin(arr[i], tmp->value);
+				arr[i] = ft_strjoinfree(arr[i], "=");
+				arr[i] = ft_strjoinfree(arr[i], tmp->value);
 			}
 			tmp = tmp->next;
 			i++;

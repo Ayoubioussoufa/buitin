@@ -6,97 +6,97 @@
 /*   By: aybiouss <aybiouss@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 18:28:01 by aybiouss          #+#    #+#             */
-/*   Updated: 2023/02/23 15:51:28 by aybiouss         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:48:51 by aybiouss         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../mini_shell.h"
 
-// void	error(char *str, int n)
-// {
-// 	if (str)
-// 	{
-// 		ft_putstr_fd(strerror(n), 2);
-// 		ft_putstr_fd(": ", 2);
-// 		ft_putstr_fd(str, 2);
-// 		ft_putstr_fd("\n", 2);
-// 	}
-// 	exit(n);
-// }
+void	error(char *str, int n)
+{
+	if (str)
+	{
+		ft_putstr_fd(strerror(n), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd("\n", 2);
+	}
+	exit(n);
+}
 
-// char	*get_cmd(char **paths, char *cmd)
-// {
-// 	int		i;
-// 	char	*tmp;
-// 	char	*path;
+char	*get_cmd(char **paths, char *cmd)
+{
+	int		i;
+	char	*tmp;
+	char	*path;
 
-// 	if (ft_strchr(cmd, '/'))
-// 		return (cmd);
-// 	i = 0;
-// 	while (paths[i])
-// 	{
-// 		tmp = ft_strjoin(paths[i], "/");
-// 		path = ft_strjoin(tmp, cmd);
-// 		free(tmp);
-// 		if (access(path, F_OK) == 0)
-// 			return (path);
-// 		free(path);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
+	if (ft_strchr(cmd, '/'))
+		return (cmd);
+	i = 0;
+	while (paths[i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(path, F_OK) == 0)
+			return (path);
+		free(path);
+		i++;
+	}
+	return (NULL);
+}
 
-// char	**get_paths(char **env, t_shell *shell)
-// {
-// 	char	**paths;
-// 	int		i;
+char	**get_paths(char **env, t_shell *shell)
+{
+	char	**paths;
+	int		i;
 
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		if (ft_strnstr(env[i], "PATH", 4))
-// 		{
-// 			paths = ft_split(env[i] + 5, ':');
-// 			if (!paths)
-// 				error("Split function failed", 1);
-// 			return (paths);
-// 		}
-// 		i++;
-// 	}
-// 	ft_putstr_fd("Command not found: ", 2);
-// 	ft_putstr_fd(shell->cmd, 2);
-// 	ft_putstr_fd("\n", 2);
-// 	exit(127);
-// 	return (NULL);
-// }
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strnstr(env[i], "PATH", 4))
+		{
+			paths = ft_split(env[i] + 5, ':');
+			if (!paths)
+				error("Split function failed", 1);
+			return (paths);
+		}
+		i++;
+	}
+	ft_putstr_fd("Command not found: ", 2);
+	ft_putstr_fd(shell->cmd, 2);
+	ft_putstr_fd("\n", 2);
+	exit(127);
+	return (NULL);
+}
 
-// void	ft_execute(t_shell *shell, char **env)
-// {
-// 	pid_t	pid;
-// 	int	ret = 0;
-// 	// (void)env;
-// 	pid = fork();
-// 	// int i = ft_lstsize(shell);
-// 	// while (shell)
-// 	// {
-// 	// 	printf("%s \t %d\n", shell->cmd, shell->type);
-// 	// 	shell = shell->next;
-// 	// }
-// 	// printf("%d\n", i);
-// 	if (pid == 0)
-// 	{
-// 		shell->cmds = ft_split(shell->cmd, ' '); //split the given commands
-// 		// printf("%s\n", shell->cmds[0]);
-// 		// printf("%s\n", shell->cmds[0] + 1);
-// 		shell->paths = get_paths(env, shell); //get all paths
-// 		shell->argv = get_cmd(shell->paths, shell->cmds[0]); // join the path with the command
-// 		if (execve(shell->argv, shell->cmds, env) == -1) //execute the cmd in the given env
-// 			error(NULL, errno);
-// 	}
-// 	else
-// 		waitpid(-1, &ret, 0);
-// }
+void	ft_execute(t_shell *shell, char **env)
+{
+	pid_t	pid;
+	int	ret = 0;
+	// (void)env;
+	pid = fork();
+	// int i = ft_lstsize(shell);
+	// while (shell)
+	// {
+	// 	printf("%s \t %d\n", shell->cmd, shell->type);
+	// 	shell = shell->next;
+	// }
+	// printf("%d\n", i);
+	if (pid == 0)
+	{
+		shell->cmds = ft_split(shell->cmd, ' '); //split the given commands
+		// printf("%s\n", shell->cmds[0]);
+		// printf("%s\n", shell->cmds[0] + 1);
+		shell->paths = get_paths(env, shell); //get all paths
+		shell->argv = get_cmd(shell->paths, shell->cmds[0]); // join the path with the command
+		if (execve(shell->argv, shell->cmds, env) == -1) //execute the cmd in the given env
+			error(NULL, errno);
+	}
+	else
+		waitpid(-1, &ret, 0);
+}
 
 // void	checktype(t_shell *shell, char **env)
 // {
@@ -431,17 +431,21 @@ void	exec_redir(t_shell *shell, t_pipe *pipe)
 	}
 }
 
-void	check_fd_builtins(t_pipe *pipe)
+void	check_fd_builtins(t_pipe *pipe, int fd[2])
 {
 	if (pipe->infile != 0)
 	{
 		dup2(pipe->infile, STDIN_FILENO);
 		close(pipe->infile);
+		if (fd[0] != 0)
+			close(fd[0]);
 	}
 	if (pipe->outfile != 1)
 	{
 		dup2(pipe->outfile, STDOUT_FILENO);
 		close(pipe->outfile);
+		if (fd[1] != 1)
+			close(fd[1]);
 	}
 }
 
@@ -476,10 +480,10 @@ int	exec_builtins_execve(t_shell *shell, char ***env, t_pipe *pipe)
 	// (void)fd;
 	// (void)env;
 	if (check_builtins(shell->cmds[0]) == 1)
-		execute_builtin(shell->cmds, *env, pipe);
+		execute_builtin(shell->cmds, env, pipe);
 		// execute_builtins();
-	// else
-	// 	execute_cmd();
+	else
+		execute_cmd(shell->cmds, *env, pipe);
 	return (0);
 }
 

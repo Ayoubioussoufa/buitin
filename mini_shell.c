@@ -168,10 +168,10 @@ void mini_shell(char **env)
 		 	read = parse_redirect(read);
 			shell = parse_line(read, env);
 			execute(shell, &env, pipe);
-			printf("*********************\n");
-			int i = 0;
-			while (env[i])
-				printf("%s\n", env[i++]);
+			// printf("*********************\n");
+			// int i = 0;
+			// while (env[i])
+			// 	printf("%s\n", env[i++]);
 			//  int i = 0;
 			//  while(shell)
 			//  {
